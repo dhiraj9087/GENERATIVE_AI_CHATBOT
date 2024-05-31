@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Question-Answer Bot</title>
+    <style>
+        body {
+            background: rgb(0, 45, 60);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; 
+            height: 100%;
+            border: 20px solid rgb(60, 60, 60);
+            border-radius: 20px; 
+            background: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #inner-container {
+            width: 100%;
+            height: 100%;
+            background: orange;
+            border-radius: 20px; 
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center; 
+        }
+        label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+        select, input[type="text"], button {
+            width: 100%; 
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+        .btn-group button {
+            width: 90%; 
+        }
+        .rock {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            transform: rotate(45deg);
+            animation: rock-animation 6s infinite;
+        }
+        @keyframes rock-animation {
+            0% { background: darkorange; }
+            50% { background: transparent; }
+            100% { background: darkorange; }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="rock1" class="rock"></div>
+        <div id="rock2" class="rock"></div>
+        <div id="rock3" class="rock"></div>
+        <div id="rock4" class="rock"></div>
+        <div id="rock5" class="rock"></div>
+        <div id="rock6" class="rock"></div>
+        <div id="rock7" class="rock"></div>
+        <div id="rock8" class="rock"></div>
+        <div id="inner-container">
+            <h1>AI Question-Answer Bot</h1>
+            <form method="POST">
+                <button type="submit" name="generate">Generate Question</button>
+            </form>
+            
+            {% if question %}
+                <div>
+                    <h2>Question:</h2>
+                    <p>{{ question }}</p>
+                    <form method="POST">
+                        <input type="hidden" name="question" value="{{ question }}">
+                        <label for="answer">Your Answer:</label>
+                        <input type="text" id="answer" name="answer" required>
+                        <button type="submit" name="evaluate">Submit Answer</button>
+                    </form>
+                </div>
+            {% endif %}
+
+            {% if evaluation %}
+                <div>
+                    <h2>Evaluation:</h2>
+                    <p>{{ evaluation }}</p>
+                </div>
+            {% endif %}
+
+            <div class="btn-group">
+                <form method="POST" id="next-question-form">
+                    <input type="hidden" name="next_question" value="true">
+                    <button type="submit">Next Question</button>
+                </form>
+
+                <form method="POST">
+                    <input type="hidden" name="end_test" value="true">
+                    <button type="submit">End Test</button>
+                </form>
+            </div>
+
+            <script>
+                document.getElementById("next-question-form").addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    window.location.reload();
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+
+
