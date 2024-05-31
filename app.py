@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import cohere
+import os
 # import logging
 
 # logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
-co = cohere.Client('YOUR_API_KEY')   ## here I used Cohere api key 
+co = cohere.Client(os.getenv('COHERE_API_KEY'))  
 
 topics = ["Geography", "Health", "Sports"]  
 questions_answers = []  
@@ -89,4 +90,4 @@ def evaluate_answer(question, user_answer,correct_answer):
 
     return evaluation
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
